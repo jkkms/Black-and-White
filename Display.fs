@@ -7,11 +7,16 @@ module Display =
 
   // ----- ANSI color support -----
 
-  /// Color is used only on a real terminal. When output is redirected (for
-  /// example piped to a file) or NO_COLOR is set, plain text is printed instead.
-  let private useColor =
+  /// Color is used only on a real terminal. It is off by default when output
+  /// is redirected (e.g. piped to a file), or when the NO_COLOR environment
+  /// variable is set, or once `disableColor ()` has been called (used to back
+  /// the `--no-color` command-line flag in `Program.fs`).
+  let mutable private useColor =
     not Console.IsOutputRedirected
     && isNull (Environment.GetEnvironmentVariable "NO_COLOR")
+
+  /// Turn color output off for the rest of the run.
+  let disableColor () : unit = useColor <- false
 
   /// Wrap a string in an ANSI escape so it prints with the given style.
   let private esc (codes: string) (s: string) : string =

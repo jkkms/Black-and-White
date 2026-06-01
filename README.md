@@ -38,9 +38,17 @@ This builds and starts the game in the terminal.
 
 The board is drawn as cards: **black cards** (white outline, white number) for
 even tiles and **solid white cards** for odd ones. On a terminal that supports
-it the cards and results are shown in color; when output is redirected, or if
-the `NO_COLOR` environment variable is set, the same board is printed in plain
-text instead.
+it the cards and results are shown in color.
+
+To run without color, pass `--no-color` (short form `-n`):
+
+```
+dotnet run -- --no-color
+```
+
+> The `--` separates `dotnet run`'s own options from arguments passed to the
+> program. Color is also automatically off when output is redirected (e.g.
+> piped to a file) or when the `NO_COLOR` environment variable is set.
 
 ## How to Play
 
